@@ -1,8 +1,11 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '3.4.4'
 }
 
-group = 'org.example.employeeservice'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'org.example.stafflocation'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -10,8 +13,13 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+bootJar{
+    mainClass = 'staff.location.api.StaffLocationAPI'
 }
 
 test {
