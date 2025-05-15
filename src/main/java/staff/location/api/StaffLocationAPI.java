@@ -31,6 +31,15 @@ public class StaffLocationAPI {
         Employee [] employee;
         employee = restTemplate.getForObject(url, Employee[].class);
 
+
+        List<StaffDetails> finalOutput = new ArrayList<>();
+
+        for (int i = 0; i < employee.length; i ++) {
+            Employee employee1 = employee[i];
+            String fullName = employee1.getFirstName() + " " + employee1.getSurname();
+            
+        }
+        
         return ResponseEntity.ok(new ArrayList<>());
         }
         
