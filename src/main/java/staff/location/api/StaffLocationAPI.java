@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -23,6 +24,13 @@ public class StaffLocationAPI {
     @GetMapping("/staff-details/{firstName}") 
     public ResponseEntity<List<StaffDetails>> getStaffDetails (@PathVariable String firstName) {
         String url = "http://localhost:8080/employees/" + firstName;
+
+        RestTemplate restTemplate = new RestTemplate();
+        //Send HTTP get request to http://localhost:8080/employees/"name"
+        //Converts JSON into array
+        Employee [] employee;
+        employee = restTemplate.getForObject(url, Employee[].class);
+
         return ResponseEntity.ok(new ArrayList<>());
         }
         
