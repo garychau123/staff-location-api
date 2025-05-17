@@ -37,10 +37,10 @@ public class StaffLocationAPI {
         for (int i = 0; i < employee.length; i ++) {
             Employee employee1 = employee[i];
             String fullName = employee1.getFirstName() + " " + employee1.getSurname();
-            
+            finalOutput.add(new StaffDetails(fullName, employee1.getId(), employee1.getOfficeLocation(), employee1.getOfficePhone()));
         }
         
-        return ResponseEntity.ok(new ArrayList<>());
+        return ResponseEntity.ok(finalOutput);
         }
         
     
