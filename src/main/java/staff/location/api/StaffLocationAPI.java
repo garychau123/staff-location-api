@@ -22,7 +22,7 @@ public class StaffLocationAPI {
     }
 
     @GetMapping("/staff-details/{firstName}") 
-    public ResponseEntity<String> getStaffDetails (@PathVariable String firstName) {
+    public ResponseEntity<List<StaffDetails>> getStaffDetails (@PathVariable String firstName) {
         String url = "http://localhost:8080/employees/" + firstName;
 
         RestTemplate restTemplate = new RestTemplate();
@@ -40,16 +40,16 @@ public class StaffLocationAPI {
             finalOutput.add(new StaffDetails(fullName, employee1.getId(), employee1.getOfficeLocation(), employee1.getOfficePhone()));
         }
 
-        StringBuilder output = new StringBuilder();
-        for (int i =0; i < finalOutput.size(); i++) {
-            StaffDetails staff = finalOutput.get(i);
-            output.append("o Name: " + staff.getName() + "<br>");
-            output.append("o Employee ID: " + staff.getId() + "<br>");
-            output.append("o Location: " + staff.getOfficeLocation() + "<br>");
-            output.append("o Phone: " + staff.getOfficePhone()+ "<br>");
-        }
+//        StringBuilder output = new StringBuilder();
+//        for (int i =0; i < finalOutput.size(); i++) {
+//            StaffDetails staff = finalOutput.get(i);
+//            output.append("o Name: " + staff.getName() + "<br>");
+//            output.append("o Employee ID: " + staff.getId() + "<br>");
+//            output.append("o Location: " + staff.getOfficeLocation() + "<br>");
+//            output.append("o Phone: " + staff.getOfficePhone()+ "<br>");
+//        }
         
-        return ResponseEntity.ok(output.toString());
+        return ResponseEntity.ok(finalOutput);
         }
         
     
