@@ -8,14 +8,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @RestController
 @SpringBootApplication
 public class StaffLocationAPI {
+    private static final Logger logger = LoggerFactory.getLogger(StaffLocationAPI.class);
+
     @RequestMapping("/")
     String home(){
         return "hi";
@@ -25,32 +29,21 @@ public class StaffLocationAPI {
     public ResponseEntity<List<StaffDetails>> getStaffDetails (@PathVariable String firstName) {
         String url = "http://localhost:8080/employees/" + firstName;
 
-        RestTemplate restTemplate = new RestTemplate();
-        //Send HTTP get request to http://localhost:8080/employees/"name"
-        //Converts JSON into array
-        Employee [] employee;
-        employee = restTemplate.getForObject(url, Employee[].class);
-
+        RestClient restClient = RestClient.create();
+        Employee[] employee = restClient.get()
+            .uri(url)
+            .retrieve()
+            .body(Employee[].class);
 
         List<StaffDetails> finalOutput = new ArrayList<>();
 
-        for (int i = 0; i < employee.length; i ++) {
-            Employee employee1 = employee[i];
+        for (Employee employee1 : employee) {
             String fullName = employee1.getFirstName() + " " + employee1.getSurname();
             finalOutput.add(new StaffDetails(fullName, employee1.getId(), employee1.getOfficeLocation(), employee1.getOfficePhone()));
         }
-
-//        StringBuilder output = new StringBuilder();
-//        for (int i =0; i < finalOutput.size(); i++) {
-//            StaffDetails staff = finalOutput.get(i);
-//            output.append("o Name: " + staff.getName() + "<br>");
-//            output.append("o Employee ID: " + staff.getId() + "<br>");
-//            output.append("o Location: " + staff.getOfficeLocation() + "<br>");
-//            output.append("o Phone: " + staff.getOfficePhone()+ "<br>");
-//        }
-        
+        logger.info("Returning StaffDetails: {}", finalOutput);
         return ResponseEntity.ok(finalOutput);
-        }
+    }
         
     
     public static void main(String[] args){
