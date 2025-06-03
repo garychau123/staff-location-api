@@ -44,5 +44,15 @@ public class StaffDetails {
     public void setOfficePhone(String officePhone) {
         this.officePhone = officePhone;
     }
+
+    @Override
+    public String toString() {
+        return "StaffDetails{" +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", officeLocation='" + officeLocation + '\'' +
+                ", officePhone='" + officePhone + '\'' +
+                '}';
+    }
 }
 
