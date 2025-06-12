@@ -26,7 +26,12 @@ public class StaffLocationAPI {
     }
 
     @GetMapping("/staff-details/{firstName}") 
-    public ResponseEntity<List<StaffDetails>> getStaffDetails (@PathVariable String firstName) {
+    public ResponseEntity<?> getStaffDetails (@PathVariable String firstName) {
+        // Validate firstName for allowed characters (only A-Z and a-z)
+        if (!firstName.matches("^[a-zA-Z]+$")) {
+            logger.warn("Invalid characters in firstName: {}", firstName);
+            return ResponseEntity.badRequest().body(java.util.Collections.singletonMap("error", "invalid characters"));
+        }
         String url = "http://localhost:8080/employees/" + firstName;
 
         RestClient restClient = RestClient.create();
