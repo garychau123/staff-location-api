@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.annotation.Validated;
+import jakarta.validation.constraints.Pattern;
 
 
 @RestController
 @SpringBootApplication
+@Validated
 public class StaffLocationAPI {
     private static final Logger logger = LoggerFactory.getLogger(StaffLocationAPI.class);
 
@@ -26,12 +29,9 @@ public class StaffLocationAPI {
     }
 
     @GetMapping("/staff-details/{firstName}") 
-    public ResponseEntity<?> getStaffDetails (@PathVariable String firstName) {
-        // Validate firstName for allowed characters (only A-Z and a-z)
-        if (!firstName.matches("^[a-zA-Z]+$")) {
-            logger.warn("Invalid characters in firstName: {}", firstName);
-            return ResponseEntity.badRequest().body(java.util.Collections.singletonMap("error", "invalid characters"));
-        }
+    public ResponseEntity<?> getStaffDetails (
+        @PathVariable
+        @Pattern(regexp = "^[A-Za-z]+$", message = "invalid characters") String firstName) {
         String url = "http://localhost:8080/employees/" + firstName;
 
         RestClient restClient = RestClient.create();
