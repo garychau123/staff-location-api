@@ -17,6 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
 import jakarta.validation.constraints.Pattern;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 
 @RestController
 @SpringBootApplication
@@ -29,8 +32,11 @@ public class StaffLocationAPI {
         return "hi";
     }
 
+    @Operation(summary = "Get staff details by first name")
+    @ApiResponse(responseCode = "200", description = "List of staff details returned")
+    @ApiResponse(responseCode = "400", description = "Invalid characters or missing name")
     @GetMapping("/staff-details/{firstName}") 
-    public ResponseEntity<?> getStaffDetails (
+    public ResponseEntity<List<StaffDetails>> getStaffDetails (
         @PathVariable
         @Pattern(regexp = "^[A-Za-z]+$", message = "invalid characters") String firstName) {
         String url = "http://localhost:8080/employees/" + firstName;
@@ -50,7 +56,9 @@ public class StaffLocationAPI {
         logger.info("Returning StaffDetails: {}", finalOutput);
         return ResponseEntity.ok(finalOutput);
     }
-
+    
+    @Operation(summary = "Handle missing name")
+    @ApiResponse(responseCode = "400", description = "Missing name provided")
     @GetMapping({"/staff-details", "/staff-details/"})
     public ResponseEntity<?> handleMissingName() {
     return ResponseEntity.badRequest()
