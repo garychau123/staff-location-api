@@ -1,6 +1,7 @@
 package staff.location.api;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
@@ -49,6 +50,12 @@ public class StaffLocationAPI {
         logger.info("Returning StaffDetails: {}", finalOutput);
         return ResponseEntity.ok(finalOutput);
     }
+
+    @GetMapping({"/staff-details", "/staff-details/"})
+    public ResponseEntity<?> handleMissingName() {
+    return ResponseEntity.badRequest()
+            .body(Collections.singletonMap("error", "missing name"));
+}
         
     
     public static void main(String[] args){
