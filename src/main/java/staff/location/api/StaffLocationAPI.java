@@ -1,13 +1,11 @@
 package staff.location.api;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,15 +25,32 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 public class StaffLocationAPI {
     private static final Logger logger = LoggerFactory.getLogger(StaffLocationAPI.class);
 
-    @RequestMapping("/")
-    String home(){
-        return "hi";
-    }
-
-    @Operation(summary = "Get staff details by first name")
+    @Operation(
+        summary = "Get staff details by first name",
+        parameters = {
+            @io.swagger.v3.oas.annotations.Parameter(
+                name = "firstName",
+                description = "First name (letters only, A-Z or a-z)",
+                example = "Gary",
+                required = true,
+                schema = @io.swagger.v3.oas.annotations.media.Schema(
+                    pattern = "^[A-Za-z]+$"
+                )
+            )
+        }
+    )
     @ApiResponse(responseCode = "200", description = "List of staff details returned")
-    @ApiResponse(responseCode = "400", description = "Invalid characters or missing name")
-    @GetMapping("/staff-details/{firstName}") 
+    @ApiResponse(
+        responseCode = "400",
+        description = "Invalid characters or missing name",
+        content = @io.swagger.v3.oas.annotations.media.Content(
+            mediaType = "application/json",
+            examples = @io.swagger.v3.oas.annotations.media.ExampleObject(
+                value = "{\"error\":\"invalid characters\"}"
+            )
+        )
+    )
+    @GetMapping(value = "/staff-details/{firstName}", produces = "application/json") 
     public ResponseEntity<List<StaffDetails>> getStaffDetails (
         @PathVariable
         @Pattern(regexp = "^[A-Za-z]+$", message = "invalid characters") String firstName) {
@@ -56,15 +71,6 @@ public class StaffLocationAPI {
         logger.info("Returning StaffDetails: {}", finalOutput);
         return ResponseEntity.ok(finalOutput);
     }
-    
-    @Operation(summary = "Handle missing name")
-    @ApiResponse(responseCode = "400", description = "Missing name provided")
-    @GetMapping({"/staff-details", "/staff-details/"})
-    public ResponseEntity<?> handleMissingName() {
-    return ResponseEntity.badRequest()
-            .body(Collections.singletonMap("error", "missing name"));
-}
-        
     
     public static void main(String[] args){
         SpringApplication.run(StaffLocationAPI.class, args);
