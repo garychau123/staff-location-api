@@ -1,10 +1,36 @@
 package staff.location.api;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class StaffDetails {
+    @Schema(
+        description = "Name of the staff member",
+        example = "Gary Chau",
+        required = true
+    )
     private String name;
+
+    @Schema(
+        description = "Unique identifier for the staff member",
+        example = "2150",
+        required = true
+    )
     private String id;
+
+    @Schema(
+        description = "Office location of the staff member",
+        example = "Freedom Office, Level 11, Desk 25",
+        required = true
+    )
     private String officeLocation;
+
+    @Schema(
+        description = "Office phone number of the staff member",
+        example = "03 9476-8356",
+        required = true
+    )
     private String officePhone;
+    
 
     public StaffDetails(String name, String id, String officeLocation, String officePhone) {
         this.name = name;
