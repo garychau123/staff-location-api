@@ -21,7 +21,7 @@ dependencies {
 }
 
 bootJar{
-    mainClass = 'staff.location.api.StaffLocationAPI'
+    mainClass = 'staff.location.api.StaffLocationAPIApplication'
 }
 
 test {

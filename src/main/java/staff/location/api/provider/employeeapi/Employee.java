@@ -1,4 +1,4 @@
-package staff.location.api;
+package staff.location.api.provider.employeeapi;
 
 public class Employee {
     private String id;

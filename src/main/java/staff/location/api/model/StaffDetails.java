@@ -1,4 +1,4 @@
-package staff.location.api;
+package staff.location.api.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

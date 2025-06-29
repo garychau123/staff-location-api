@@ -1,10 +1,8 @@
-package staff.location.api;
+package staff.location.api.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClient;
@@ -14,16 +12,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
 import jakarta.validation.constraints.Pattern;
-
+import staff.location.api.model.StaffDetails;
+import staff.location.api.provider.employeeapi.Employee;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
-
 @RestController
-@SpringBootApplication
 @Validated
-public class StaffLocationAPI {
-    private static final Logger logger = LoggerFactory.getLogger(StaffLocationAPI.class);
+public class StaffLocationController {
+    private static final Logger logger = LoggerFactory.getLogger(StaffLocationController.class);
 
     @Operation(
         summary = "Get staff details by first name",
@@ -70,9 +67,5 @@ public class StaffLocationAPI {
         }
         logger.info("Returning StaffDetails: {}", finalOutput);
         return ResponseEntity.ok(finalOutput);
-    }
-    
-    public static void main(String[] args){
-        SpringApplication.run(StaffLocationAPI.class, args);
     }
 }
