@@ -1,2 +1,6 @@
 server:
   port: 8081
+
+employee:
+  api:
+    url: http://localhost:8080/employees/{firstName}

@@ -1,11 +1,14 @@
 package staff.location.api.controller;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.util.UriTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.slf4j.Logger;
@@ -21,6 +24,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 @Validated
 public class StaffLocationController {
     private static final Logger logger = LoggerFactory.getLogger(StaffLocationController.class);
+    @Value("${employee.api.url}")
+    private String employeeAPIUrl;
+    
 
     @Operation(
         summary = "Get staff details by first name",
@@ -51,11 +57,15 @@ public class StaffLocationController {
     public ResponseEntity<List<StaffDetails>> getStaffDetails (
         @PathVariable
         @Pattern(regexp = "^[A-Za-z]+$", message = "invalid characters") String firstName) {
-        String url = "http://localhost:8080/employees/" + firstName;
+
+        UriTemplate uriTemplate = new UriTemplate(employeeAPIUrl);
+        URI uri = uriTemplate.expand(firstName);
+
+        logger.info("Calling Employee API with url: {}", uri);
 
         RestClient restClient = RestClient.create();
         Employee[] employee = restClient.get()
-            .uri(url)
+            .uri(uri)
             .retrieve()
             .body(Employee[].class);
 
