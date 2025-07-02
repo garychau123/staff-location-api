@@ -11,7 +11,7 @@ import java.util.Collections;
 public class GlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(Collections.singletonMap("error", "invalid characters"));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                body(Collections.singletonMap("error", "invalid characters"));
     }
 }

@@ -4,6 +4,7 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'checkstyle'
 
 group = 'org.example.stafflocation'
 version = '1.0-SNAPSHOT'
@@ -18,6 +19,19 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    checkstyle 'com.puppycrawl.tools:checkstyle:10.12.4'
+}
+
+checkstyle {
+    toolVersion = '10.12.4'
+    configFile = rootProject.file('checkstyle.xml')
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.required = false
+        html.required = true
+    }
 }
 
 bootJar{

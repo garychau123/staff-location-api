@@ -20,13 +20,23 @@ import staff.location.api.provider.employeeapi.Employee;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
+/**
+ * REST controller for staff location lookups.
+ */
 @RestController
 @Validated
 public class StaffLocationController {
+    /**
+     * Logger for the StaffLocationController.
+     * This logger is used to log information and errors related to the staff location API.
+     */
     private static final Logger logger = LoggerFactory.getLogger(StaffLocationController.class);
+
+    /**
+     * Base URL for the Employee API.
+     */
     @Value("${employee.api.url}")
     private String employeeAPIUrl;
-    
 
     @Operation(
         summary = "Get staff details by first name",
@@ -39,7 +49,7 @@ public class StaffLocationController {
                 schema = @io.swagger.v3.oas.annotations.media.Schema(
                     pattern = "^[A-Za-z]+$"
                 )
-            )
+                )
         }
     )
     @ApiResponse(responseCode = "200", description = "List of staff details returned")
@@ -48,33 +58,42 @@ public class StaffLocationController {
         description = "Invalid characters or missing name",
         content = @io.swagger.v3.oas.annotations.media.Content(
             mediaType = "application/json",
-            examples = @io.swagger.v3.oas.annotations.media.ExampleObject(
-                value = "{\"error\":\"invalid characters\"}"
-            )
+            examples = {
+                @io.swagger.v3.oas.annotations.media.ExampleObject(
+                    value = "{\"error\":\"invalid characters\"}"
+                    )
+            }
         )
     )
-    @GetMapping(value = "/staff-details/{firstName}", produces = "application/json") 
-    public ResponseEntity<List<StaffDetails>> getStaffDetails (
+    @GetMapping(value = "/staff-details/{firstName}", produces = "application/json")
+    public ResponseEntity<List<StaffDetails>> getStaffDetails(
         @PathVariable
         @Pattern(regexp = "^[A-Za-z]+$", message = "invalid characters") String firstName) {
 
-        UriTemplate uriTemplate = new UriTemplate(employeeAPIUrl);
-        URI uri = uriTemplate.expand(firstName);
+        final UriTemplate uriTemplate = new UriTemplate(employeeAPIUrl);
+        final URI uri = uriTemplate.expand(firstName);
 
         logger.info("Calling Employee API with url: {}", uri);
 
-        RestClient restClient = RestClient.create();
-        Employee[] employee = restClient.get()
-            .uri(uri)
-            .retrieve()
-            .body(Employee[].class);
+        final RestClient restClient = RestClient.create();
+        final Employee[] employee = restClient.
+            get().
+            uri(uri).
+            retrieve().
+            body(Employee[].class);
 
-        List<StaffDetails> finalOutput = new ArrayList<>();
+        final List<StaffDetails> finalOutput = new ArrayList<>();
 
         for (Employee employee1 : employee) {
-            String fullName = employee1.getFirstName() + " " + employee1.getSurname();
-            finalOutput.add(new StaffDetails(fullName, employee1.getId(), employee1.getOfficeLocation(), employee1.getOfficePhone()));
+            final String fullName = employee1.getFirstName() + " " + employee1.getSurname();
+            finalOutput.add(new StaffDetails(
+                fullName,
+                employee1.getId(),
+                employee1.getOfficeLocation(),
+                employee1.getOfficePhone()
+            ));
         }
+
         logger.info("Returning StaffDetails: {}", finalOutput);
         return ResponseEntity.ok(finalOutput);
     }

@@ -1,37 +1,38 @@
 package staff.location.api.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
+/**
+ * Represents trimmed staff details returned to the client.
+ */
 public class StaffDetails {
-    @Schema(
-        description = "Name of the staff member",
-        example = "Gary Chau",
-        required = true
-    )
+
+    /**
+     * Full name of the staff member.
+     */
     private String name;
 
-    @Schema(
-        description = "Unique identifier for the staff member",
-        example = "2150",
-        required = true
-    )
+    /**
+     * Employee ID.
+     */
     private String id;
 
-    @Schema(
-        description = "Office location of the staff member",
-        example = "Freedom Office, Level 11, Desk 25",
-        required = true
-    )
+    /**
+     * Office location of the staff member.
+     */
     private String officeLocation;
 
-    @Schema(
-        description = "Office phone number of the staff member",
-        example = "03 9476-8356",
-        required = true
-    )
+    /**
+     * Office phone number.
+     */
     private String officePhone;
-    
 
+    /**
+     * Constructs a new StaffDetails instance.
+     *
+     * @param name            Full name
+     * @param id              Employee ID
+     * @param officeLocation  Office location
+     * @param officePhone     Office phone number
+     */
     public StaffDetails(String name, String id, String officeLocation, String officePhone) {
         this.name = name;
         this.id = id;
@@ -39,46 +40,49 @@ public class StaffDetails {
         this.officePhone = officePhone;
     }
 
+    /**
+     * Gets the full name.
+     *
+     * @return Name
+     */
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    /**
+     * Gets the employee ID.
+     *
+     * @return ID
+     */
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
+    /**
+     * Gets the office location.
+     *
+     * @return Office location
+     */
     public String getOfficeLocation() {
         return officeLocation;
     }
 
-    public void setOfficeLocation(String officeLocation) {
-        this.officeLocation = officeLocation;
-    }
-
+    /**
+     * Gets the office phone number.
+     *
+     * @return Office phone
+     */
     public String getOfficePhone() {
         return officePhone;
     }
 
-    public void setOfficePhone(String officePhone) {
-        this.officePhone = officePhone;
-    }
-
     @Override
     public String toString() {
-        return "StaffDetails{" +
-                "name='" + name + '\'' +
-                ", id='" + id + '\'' +
-                ", officeLocation='" + officeLocation + '\'' +
-                ", officePhone='" + officePhone + '\'' +
-                '}';
+        return "StaffDetails{"
+            + "name='" + name + '\''
+            + ", id='" + id + '\''
+            + ", officeLocation='" + officeLocation + '\''
+            + ", officePhone='" + officePhone + '\''
+            + '}';
     }
 }
-
