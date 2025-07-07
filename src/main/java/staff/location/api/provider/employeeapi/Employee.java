@@ -1,31 +1,29 @@
 package staff.location.api.provider.employeeapi;
 
-public class Employee {
     /**
      * This is an Employee class
      */
-    private String id;
+public class Employee {
     /**
-     * This class represents an employee in the Employee API.
+     * This class represents an employee id in the Employee API.
      */
-    private String firstName;
+    private String id;
     /**
      * This class represents an firstName in the Employee API.
      */
-    private String surname;
+    private String firstName;
     /**
      * This class represents an surname in the Employee API.
      */
-    private String officeLocation;
+    private String surname;
     /**
      * This class represents an officeLocation in the Employee API.
      */
-    private String officePhone;
+    private String officeLocation;
     /**
      * This class represents an officePhone in the Employee API.
      */
-
-    public Employee() { }
+    private String officePhone;
 
     public String getId() {
         return id; }

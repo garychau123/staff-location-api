@@ -1,0 +1,3 @@
+sonarLint {
+  isGeneratedCodeIgnored = false
+}
