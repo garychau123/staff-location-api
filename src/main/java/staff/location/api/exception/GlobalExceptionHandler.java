@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
      * @return ResponseEntity<Map<String, String>> containing the error message
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<Map<String, String>> handleConstraintViolationException(ConstraintViolationException ex) {
+    public ResponseEntity<Map<String, String>> handleConstraintViolationException(final ConstraintViolationException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                 body(Collections.singletonMap("error", "invalid characters"));
     }

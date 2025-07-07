@@ -29,11 +29,11 @@ public class Employee {
         return id; }
     public String getFirstName() {
         return firstName; }
-    public String getSurname() { 
+    public String getSurname() {
         return surname; }
-    public String getOfficeLocation() { 
+    public String getOfficeLocation() {
         return officeLocation; }
-    public String getOfficePhone() { 
+    public String getOfficePhone() {
         return officePhone; }
 }
 

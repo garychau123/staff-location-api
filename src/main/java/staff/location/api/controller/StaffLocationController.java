@@ -30,7 +30,7 @@ public class StaffLocationController {
      * Logger for the StaffLocationController.
      * This logger is used to log information and errors related to the staff location API.
      */
-    private static final Logger logger = LoggerFactory.getLogger(StaffLocationController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StaffLocationController.class);
 
     /**
      * Base URL for the Employee API.
@@ -68,12 +68,12 @@ public class StaffLocationController {
     @GetMapping(value = "/staff-details/{firstName}", produces = "application/json")
     public ResponseEntity<List<StaffDetails>> getStaffDetails(
         @PathVariable
-        @Pattern(regexp = "^[A-Za-z]+$", message = "invalid characters") String firstName) {
+        @Pattern(regexp = "^[A-Za-z]+$", message = "invalid characters") final String firstName) {
 
         final UriTemplate uriTemplate = new UriTemplate(employeeAPIUrl);
         final URI uri = uriTemplate.expand(firstName);
 
-        logger.info("Calling Employee API with url: {}", uri);
+        LOGGER.info("Calling Employee API with url: {}", uri);
 
         final RestClient restClient = RestClient.create();
         final Employee[] employee = restClient.
@@ -94,7 +94,7 @@ public class StaffLocationController {
             ));
         }
 
-        logger.info("Returning StaffDetails: {}", finalOutput);
+        LOGGER.info("Returning StaffDetails: {}", finalOutput);
         return ResponseEntity.ok(finalOutput);
     }
 }

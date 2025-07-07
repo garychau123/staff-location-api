@@ -33,11 +33,11 @@ public class StaffDetails {
      * @param officeLocation  Office location
      * @param officePhone     Office phone number
      */
-    public StaffDetails(String name, String id, String officeLocation, String officePhone) {
-        this.name = name;
-        this.id = id;
-        this.officeLocation = officeLocation;
-        this.officePhone = officePhone;
+    public StaffDetails(final String staffName, final String staffId, final String staffOfficeLocation, final String staffOfficePhone) {
+        name = staffName;
+        id = staffId;
+        officeLocation = staffOfficeLocation;
+        officePhone = staffOfficePhone;
     }
 
     /**
