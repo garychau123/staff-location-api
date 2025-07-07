@@ -4,15 +4,15 @@
     "https://checkstyle.org/dtds/configuration_1_3.dtd">
 <module name="Checker">
 
-    <!-- ✅ File level rules -->
+    <!--  File level rules -->
     <module name="FileTabCharacter"/>
 
-    <!-- ✅ LineLength must be directly under Checker -->
+    <!--  LineLength must be directly under Checker -->
     <module name="LineLength">
         <property name="max" value="120"/>
     </module>
 
-    <!-- ✅ TreeWalker for syntax-level rules -->
+    <!--  TreeWalker for syntax-level rules -->
     <module name="TreeWalker">
         <module name="Indentation">
             <property name="basicOffset" value="4"/>
