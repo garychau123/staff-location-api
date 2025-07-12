@@ -4,3 +4,22 @@ server:
 employee:
   api:
     url: http://localhost:8080/employees/{firstName}
+
+spring:
+  boot:
+    admin:
+      client:
+        instance:
+          service-url: http://localhost:${server.port}
+        url: http://localhost:8083
+  application:
+    name: staff-location-api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true 
