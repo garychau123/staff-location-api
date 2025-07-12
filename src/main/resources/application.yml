@@ -17,9 +17,16 @@ spring:
 
 management:
   endpoints:
+    # access:
+    #   default: none
     web:
       exposure:
         include: "*"
+  endpoint:
+    health:
+      show-details: always
   info:
     env:
-      enabled: true 
+      enabled: true
+
+    
