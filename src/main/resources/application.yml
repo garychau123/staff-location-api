@@ -12,6 +12,12 @@ spring:
         instance:
           service-url: http://localhost:${server.port}
         url: http://localhost:8083
+      notify:
+        teams:
+          enabled: true
+          webhook-url: "https://outlook.office.com/webhook/your-teams-webhook-url-here"
+          message: "**#{instance.registration.name}** (#{instance.id}) is *#{lastStatus}*"
+
   application:
     name: staff-location-api
 
