@@ -38,6 +38,13 @@ public class StaffLocationController {
     @Value("${employee.api.url}")
     private String employeeAPIUrl;
 
+    private final RestClient restClient;
+
+    // ✅ Add this constructor
+    public StaffLocationController(RestClient restClient) {
+        this.restClient = restClient;
+    }
+
     @Operation(
         summary = "Get staff details by first name",
         parameters = {
@@ -75,7 +82,7 @@ public class StaffLocationController {
 
         LOGGER.info("Calling Employee API with url: {}", uri);
 
-        final RestClient restClient = RestClient.create();
+        // final RestClient restClient = RestClient.create();
         final Employee[] employee = restClient.
             get().
             uri(uri).
